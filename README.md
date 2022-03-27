@@ -10,7 +10,7 @@ pip install pandas
 
 El script se debe ejecutar de la siguiente manera:
 ```
-python fuelPriceScraper.py --startDate 01/11/2017 --endDate 04/11/2017
+python fuelPriceScraper.py --startDate 01/01/2020 --endDate 27/03/2022
 ```
 
 Donde **startDate** es la fecha de inicio y **endDate** es la fecha de fin del intervalo de tiempo que se deseea extraer. Los registros se almacenan en un archivo de tipo CSV.
@@ -46,7 +46,7 @@ pip install pandas
 
 To run the script:
 ```
-python fuelPriceScraper.py --startDate 01/11/2017 --endDate 04/11/2017
+python fuelPriceScraper.py --startDate 01/01/2020 --endDate 27/03/2022
 ```
 
 Where **startDate** is the start date and **endDate** is the end date of interval of time to query. All data between this interval is extracted into csv file.
