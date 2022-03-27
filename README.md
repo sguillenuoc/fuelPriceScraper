@@ -10,6 +10,7 @@ La práctica ha sido realizada por **Carlos Pérez Cebrián** y **Sandra Guillé
 ## Ficheros del repositorio
 
 * **README.md**: archivo con la información del repositirio, así como las instruciones para su ejecución.
+* **PRA1.pdf** : archivo pdf con las respuestas de la práctica.
 * **fuelPriceScraper.py**: contiene el script para la extración de información.
 * **fuelPriceScraper.csv**: contiene la tabla con la información extraida.
 
