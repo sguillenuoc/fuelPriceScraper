@@ -1,7 +1,7 @@
 ## Práctica 1: Web scraping
 ## Descripción
 
-Esta práctica utiliza técnicas de web scraping para extraer los precios de diferentes tipos de combustible de la página web del (https://geoportalgasolineras.es/#/Inicio) del Ministerio para la transición ecológica y el reto demagráfico.
+Esta práctica utiliza técnicas de web scraping para extraer los precios de diferentes tipos de combustible de la página web del (https://geoportalgasolineras.es/#/Inicio) del Ministerio para la transición ecológica y el reto demográfico.
 
 ## Miembros del equipo
 
