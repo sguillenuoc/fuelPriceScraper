@@ -1,5 +1,4 @@
 # fuelPriceScraper
-# foodPriceScraper
 ## Español
 
 Extrae los precios de diferentes tipos de combustible de la página web del (https://geoportalgasolineras.es/#/Inicio) del Ministerio para la transición ecológica y el reto demagráfico.
@@ -7,9 +6,6 @@ Extrae los precios de diferentes tipos de combustible de la página web del (htt
 Para ejecutar el script es necesario instalar la siguientes bibliotecas:
 ```
 pip install pandas
-pip install requests
-pip install lxml
-pip install beautifulsoup4
 ```
 
 El script se debe ejecutar de la siguiente manera:
