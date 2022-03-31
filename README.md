@@ -22,11 +22,11 @@ pip install pandas
 ```
 
 El script se debe ejecutar de la siguiente manera:
+
 ```
-python fuelPriceScraper.py --startDate 01/01/2020 --endDate 27/03/2022
+python fuelPriceScraper.py 
 ```
 
-Donde **startDate** es la fecha de inicio y **endDate** es la fecha de fin del intervalo de tiempo que se deseea extraer. Los registros se almacenan en un archivo de tipo CSV.
 
 Actualmente extrae el precio actual de los siguientes combustibles:
 
