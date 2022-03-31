@@ -10,7 +10,7 @@ url = "https://geoportalgasolineras.es/#/Inicio"
 # parametros formulario
 
 StationsMenu = "Estaciones servicio"
-ccaa = "CATALUNYA"
+ccaa = "BARCELONA"
 combustible = "Gasolina 95 E5"
 
 # inicio navegador
