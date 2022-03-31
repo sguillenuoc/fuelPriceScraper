@@ -17,8 +17,13 @@ La práctica ha sido realizada por **Carlos Pérez Cebrián** y **Sandra Guillé
 ## Instrucciones para la ejecucion del script
 
 Para ejecutar el script es necesario instalar la siguientes bibliotecas:
+
 ```
 pip install pandas
+pip install selenium
+pip install requests
+pip install lxml
+pip install beautifulsoup4
 ```
 
 El script se debe ejecutar de la siguiente manera:
