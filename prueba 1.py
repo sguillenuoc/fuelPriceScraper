@@ -4,20 +4,12 @@ from selenium.webdriver.common.by import By
 import requests
 from time import sleep
 import os
-
-
-def get_robot_txt(url):
-    if url.endswith('/'):
-        path = url
-    else:
-        path = url + '/'
-    req = requests.get(path + "robots.txt", data=None)
-    return req.text
+import urlopen
 
 
 # web a analizar
 
-url = "https://geoportalgasolineras.es/#/Inicio"
+url = "https://www.dieselogasolina.com/buscador-gasolineras.html"
 
 # Setting options for the webdriver
 
@@ -30,12 +22,15 @@ option.add_argument("user-agent=AcademicCrawler")
 # Getting current folder path
 My_path = os.path.dirname(os.path.abspath(__file__))
 
+TimeOut = 5
+
 # mirar codigo html del formulario para encontrar campos minimos a rellenar
 # parametros formulario
 
-StationsMenu = "Estaciones servicio"
-ccaa = "BARCELONA"
-combustible = "Gasolina 95 E5"
+pro = "BARCELONA"
+loc = "SABADELL"
+combustible = "Ninguno en concreto"
+marca = "Cualquiera"
 
 # inicio navegador
 
@@ -45,27 +40,64 @@ browser.get(url)
 # introducir todos los campos mínimos
 # introducir parametro station en formulario
 
-stf = browser.find_element(By.NAME, "tipoBusqueda")
-stf.send_keys(StationsMenu)
+stf = browser.find_element(By.NAME, "provincia")
+stf.send_keys(pro)
 sleep(5)
 
 # introducir parametro ccaa en formulario
 
-caf = browser.find_element(By.NAME, "provincia")
-caf.send_keys(ccaa)
+caf = browser.find_element(By.NAME, "localidad")
+caf.send_keys(loc)
 sleep(5)
 
-carf = browser.find_element(By.NAME, "tipoCarburante")
+carf = browser.find_element(By.NAME, "tipo_combustible")
 caf.send_keys(combustible)
 sleep(5)
 
+marf = browser.find_element(By.NAME, "empresa")
+caf.send_keys(marca)
+sleep(5)
+
+
 # pulsar boton buscar (mirar etiqueta de boton)
 
-search = browser.find_element(By.ID, "botonBuscar")
+search = browser.find_element(By.CLASS_NAME, "btn.btn-red.shadowover")
 search.click()
+
+
+
 
 # inicio scraping
 
 result = requests.get(url)
 src = result.content
-soup = BeautifulSoup(src, "xlml")
+soup = BeautifulSoup(src, "html.parser")
+
+print(soup.prettify())
+"""
+elements = browser.find_elements(By.ID, "rdos_gasolineras_wrapper")
+links = []
+for element in elements:
+    links.append(element.get_attribute("href"))
+
+# Navigate through the links
+dictlist = []
+
+for link in links:
+    browser.get(link)
+    browser.implicitly_wait(TimeOut)
+    userStatsDict = {}
+
+# crear archivo
+
+filename = "/FuelData.csv"
+file = open(My_path + filename, "w+")
+
+
+for i in range(len(links)):
+    file.write(str(links[i]) + ";")
+file.write(\n)
+
+
+file.close()
+browser.quit()"""
