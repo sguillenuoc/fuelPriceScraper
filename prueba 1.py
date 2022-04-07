@@ -1,103 +1,101 @@
-from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-import requests
-from time import sleep
+import time
+import csv
 import os
-import urlopen
 
+# Web a analizar, parametros formulario y fichero salida
+url = 'https://www.dieselogasolina.com/'
+pro = 'BARCELONA'
+loc = 'SABADELL'
+combustible = 'Gasolina sin plomo 95'
+csv_name = 'dieselogasolina.csv'
 
-# web a analizar
+# Opciones de navegación
+options = webdriver.ChromeOptions()
+options.add_argument('--start-maximized')  # ventana maximizada
+options.add_argument('--disable-extensions')  # sin extensiones
 
-url = "https://www.dieselogasolina.com/buscador-gasolineras.html"
-
-# Setting options for the webdriver
-
-option = webdriver.ChromeOptions()
-option.add_argument("--incognito")  # open incognito mode
-option.add_argument("user-agent=AcademicCrawler")
-
-# set our UserAgent name, in this case AcademicCrawler
-
-# Getting current folder path
+# Path actual (donde está ubicado el driver chromedriver.exe)
 My_path = os.path.dirname(os.path.abspath(__file__))
 
-TimeOut = 5
+# Inicializamos el navegador
+driver = webdriver.Chrome(executable_path=My_path + '/chromedriver.exe', options=options)
+driver.get(url)
 
-# mirar codigo html del formulario para encontrar campos minimos a rellenar
-# parametros formulario
+# Interactuamos con la web con Selenium
+###
 
-pro = "BARCELONA"
-loc = "SABADELL"
-combustible = "Ninguno en concreto"
-marca = "Cualquiera"
+# Aceptamos el uso de cookies
+WebDriverWait(driver, 5) \
+    .until(EC.element_to_be_clickable((By.CSS_SELECTOR,
+                                       'button.btn.btn-blue'))) \
+    .click()
+time.sleep(2)
 
-# inicio navegador
+# Redirección a la pantalla de búsqueda
+WebDriverWait(driver, 5) \
+    .until(EC.element_to_be_clickable((By.XPATH,
+                                       '/html/body/div[1]/div[2]/div[1]/div[2]/ul/li[1]/a'))) \
+    .click()
+time.sleep(2)
 
-browser = webdriver.Chrome(executable_path=My_path + '/chromedriver.exe', chrome_options=option)
-browser.get(url)
+# Selector de la provincia
+WebDriverWait(driver, 5) \
+    .until(EC.element_to_be_clickable((By.ID, 'provincia'))) \
+    .send_keys(pro)
 
-# introducir todos los campos mínimos
-# introducir parametro station en formulario
+# Selector de la provincia
+WebDriverWait(driver, 5) \
+    .until(EC.element_to_be_clickable((By.ID, 'localidad'))) \
+    .send_keys(loc)
 
-stf = browser.find_element(By.NAME, "provincia")
-stf.send_keys(pro)
-sleep(5)
+# Selector del tipo de combustible
+WebDriverWait(driver, 5) \
+    .until(EC.element_to_be_clickable((By.ID, 'tipo_combustible'))) \
+    .send_keys(combustible)
 
-# introducir parametro ccaa en formulario
+# Pulsamos el botón de buscar
+WebDriverWait(driver, 5) \
+    .until(EC.element_to_be_clickable((By.XPATH,
+                                       '/html/body/div[2]/div[2]/div[2]/div/div[3]/div[1]/div/div/div[2]/div/div/form/p[2]/input'))) \
+    .click()
+time.sleep(5)
 
-caf = browser.find_element(By.NAME, "localidad")
-caf.send_keys(loc)
-sleep(5)
+contents = driver.find_elements(By.XPATH, """//table[@id="rdos_gasolineras"]/tbody/tr""")
 
-carf = browser.find_element(By.NAME, "tipo_combustible")
-caf.send_keys(combustible)
-sleep(5)
+info_stations = []
 
-marf = browser.find_element(By.NAME, "empresa")
-caf.send_keys(marca)
-sleep(5)
+for content in contents:
+    info_station = {
+        "loc":  content.find_element(By.XPATH, """.//td[@class="localidad sorting_1"]""").text,
+        "dir": content.find_element(By.XPATH, """.//td[@class="direccion"]""").text,
+        "horario": content.find_element(By.XPATH, """.//td[@class="horario"]""").text,
+        "empresa": content.find_element(By.XPATH, """.//td[@class="empresa"]""").text,
+        "link": content.find_element(By.XPATH, """.//a""").get_attribute("href")
+    }
 
+    info_stations.append(info_station)
+    print(info_stations)
+WebDriverWait(driver, 5) \
+    .until(EC.element_to_be_clickable((By.ID, 'rdos_gasolineras_next'))) \
+    .click()
+time.sleep(1)
 
-# pulsar boton buscar (mirar etiqueta de boton)
-
-search = browser.find_element(By.CLASS_NAME, "btn.btn-red.shadowover")
-search.click()
-
-
-
-
-# inicio scraping
-
-result = requests.get(url)
-src = result.content
-soup = BeautifulSoup(src, "html.parser")
-
-print(soup.prettify())
-"""
-elements = browser.find_elements(By.ID, "rdos_gasolineras_wrapper")
-links = []
-for element in elements:
-    links.append(element.get_attribute("href"))
-
-# Navigate through the links
-dictlist = []
-
-for link in links:
-    browser.get(link)
-    browser.implicitly_wait(TimeOut)
-    userStatsDict = {}
-
-# crear archivo
-
-filename = "/FuelData.csv"
+filename = "/StationData.txt"
 file = open(My_path + filename, "w+")
 
-
-for i in range(len(links)):
-    file.write(str(links[i]) + ";")
-file.write(\n)
-
-
+keys = []
+for key in info_station:
+    keys.append(key)
+# Dump all the data with CSV format
+for i in range(len(keys)):
+    file.write(str(keys[i]) + ";")
+file.write("\n")
+for i in range(len(info_stations)):
+    for j in range(len(keys)):
+        file.writelines(str(info_stations[i][keys[j]]) + ";")
+    file.write("\n")
 file.close()
-browser.quit()"""
