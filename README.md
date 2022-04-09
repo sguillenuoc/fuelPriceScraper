@@ -11,20 +11,25 @@ La práctica ha sido realizada por **Carlos Pérez Cebrián** y **Sandra Guillé
 
 * **README.md**: archivo con la información del repositirio, así como las instruciones para su ejecución.
 * **requeriments.txt** : arcvivo con la información de los paquetes Python necesarios para ejecutar el código.
-* **_init_.py**: archibo que contiene el código que ejecuta el web scraping.
+* **__init__.py **: archibo que contiene el código que ejecuta el web scraping.
 * **fuelWebScraping.csv**: archivo que contitne la funcion scrapfuel.
-* **PRA1.pdf** : archivo pdf con las respuestas de la práctica.
+* **M2.851_sguillen1_cperezceb_PRA1_WebScraping.pdf** : archivo pdf con las respuestas de la práctica.
 
 ## Instrucciones para la ejecucion del script
 
 Para ejecutar el script es necesario instalar la siguientes bibliotecas:
 
 ```
-pip install pandas
-pip install selenium
-pip install requests
-pip install lxml
-pip install beautifulsoup4
+selenium
+time
+os
+scrapfuel
+```
+
+Para instalar las bibliotecas necesarias para la ejeccución del script es necesario ejecutar el siguiente comando: 
+
+```
+python get-pip.py install -r requirements.txt
 ```
 
 El script se debe ejecutar de la siguiente manera:
