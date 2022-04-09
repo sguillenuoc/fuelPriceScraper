@@ -74,7 +74,7 @@ def scrapfuel(pro, loc, combustible):
 
             info_stations.append(info_station)
 
-        if i < 8:
+        if i < pags:
             WebDriverWait(driver, 5) \
                 .until(EC.element_to_be_clickable((By.XPATH, """.//a[@class="paginate_button next"]"""))) \
                 .click()
