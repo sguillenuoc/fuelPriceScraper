@@ -38,21 +38,4 @@ El script se debe ejecutar de la siguiente manera:
 python _init_.py 
 ```
 
-
-Actualmente extrae el precio actual de los siguientes combustibles:
-
-- Gasolina 95 E5
-- Gasolina 95 E10
-- Gasolina 95 E5 Premium
-- Gasolina 98 E5
-- Gasolina 98 E10
-- Gasóleo A habitual
-- Gasóleo Premium
-- Gasóleo B
-- Gasóleo C
-- Bioetanol
-- Biodiésel
-- Gases licuados del pretróleo
-- Gas natural comprimido
-- Gas natural licuado
-- Hidrógeno
+A continuación debe introducir la provincia, localidad y tipo de combustible que se desee y el script extraera los datos y los guardara en un archivo csv con la información.
