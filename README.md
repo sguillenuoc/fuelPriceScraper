@@ -13,6 +13,7 @@ La práctica ha sido realizada por **Carlos Pérez Cebrián** y **Sandra Guillé
 * **requirements.txt** : arcvivo con la información de los paquetes Python necesarios para ejecutar el código.
 * **__init__.py**: archibo que contiene el código que ejecuta el web scraping.
 * **fuelWebScraping.py**: archivo que contitne la funcion scrapfuel.
+* **robots.py** : archivo que contiene la funcion para examinar las restricciones de la página. 
 * **M2.851_sguillen1_cperezceb_PRA1_WebScraping.pdf** : archivo pdf con las respuestas de la práctica.
 * **StationData.csv** : archivo csv con la información extraída.
 
