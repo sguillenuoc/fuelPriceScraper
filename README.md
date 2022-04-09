@@ -1,7 +1,7 @@
 ## Práctica 1: Web scraping
 ## Descripción
 
-Esta práctica utiliza técnicas de web scraping para extraer los precios de diferentes tipos de combustible de la página web del (https://geoportalgasolineras.es/#/Inicio) del Ministerio para la transición ecológica y el reto demográfico.
+Esta práctica utiliza técnicas de web scraping para extraer los precios de diferentes tipos de combustible de la página web del (https://www.dieselogasolina.com/).
 
 ## Miembros del equipo
 
@@ -10,9 +10,10 @@ La práctica ha sido realizada por **Carlos Pérez Cebrián** y **Sandra Guillé
 ## Ficheros del repositorio
 
 * **README.md**: archivo con la información del repositirio, así como las instruciones para su ejecución.
+* **requeriments.txt** : arcvivo con la información de los paquetes Python necesarios para ejecutar el código.
+* **_init_.py**: archibo que contiene el código que ejecuta el web scraping.
+* **fuelWebScraping.csv**: archivo que contitne la funcion scrapfuel.
 * **PRA1.pdf** : archivo pdf con las respuestas de la práctica.
-* **fuelPriceScraper.py**: contiene el script para la extración de información.
-* **fuelPriceScraper.csv**: contiene la tabla con la información extraida.
 
 ## Instrucciones para la ejecucion del script
 
@@ -29,7 +30,7 @@ pip install beautifulsoup4
 El script se debe ejecutar de la siguiente manera:
 
 ```
-python fuelPriceScraper.py 
+python _init_.py 
 ```
 
 
