@@ -11,7 +11,7 @@ localidad = input()
 
 print('Introduzca el tipo de combustible')
 print("Opciones:\n Gasolina sin plomo 95 / Gasolina sin plomo 97 / Gasolina sin plomo 98/\n"
-      "Gasóleo A habitual / Gasóleo A mejorado / Gasóleo b / Gasóleo C\n"
+      "Gasóleo A habitual / Gasóleo A mejorado / Gasóleo B / Gasóleo C\n"
       "Biodiésel / Autogas GLP / Gas N.Compr / Gas N. Licuado ")
 
 combustible = input()
