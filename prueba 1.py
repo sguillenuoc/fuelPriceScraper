@@ -3,13 +3,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import time
-import csv
 import os
 
 # Web a analizar, parametros formulario y fichero salida
 url = 'https://www.dieselogasolina.com/'
 pro = 'BARCELONA'
-loc = 'SABADELL'
+loc = 'BARCELONA'
 combustible = 'Gasolina sin plomo 95'
 csv_name = 'dieselogasolina.csv'
 
@@ -64,27 +63,32 @@ WebDriverWait(driver, 5) \
     .click()
 time.sleep(5)
 
-contents = driver.find_elements(By.XPATH, """//table[@id="rdos_gasolineras"]/tbody/tr""")
+
 
 info_stations = []
+num_pag = driver.find_element(By.XPATH, """.//span/a[last()]""").text
+pags = int(num_pag)
 
-for content in contents:
-    info_station = {
-        "loc":  content.find_element(By.XPATH, """.//td[@class="localidad sorting_1"]""").text,
-        "dir": content.find_element(By.XPATH, """.//td[@class="direccion"]""").text,
-        "horario": content.find_element(By.XPATH, """.//td[@class="horario"]""").text,
-        "empresa": content.find_element(By.XPATH, """.//td[@class="empresa"]""").text,
-        "link": content.find_element(By.XPATH, """.//a""").get_attribute("href")
-    }
+for i in range(pags):
+    contents = driver.find_elements(By.XPATH, """//table[@id="rdos_gasolineras"]/tbody/tr""")
+    for content in contents:
+        info_station = dict(loc=content.find_element(By.XPATH, """.//td[@class="localidad sorting_1"]""").text,
+                            dir=content.find_element(By.XPATH, """.//td[@class="direccion"]""").text,
+                            horario=content.find_element(By.XPATH, """.//td[@class="horario"]""").text,
+                            empresa=content.find_element(By.XPATH, """.//td[@class="empresa"]""").text,
+                            precio=content.find_element(By.XPATH, """.//td[@class="precio"]""").text,
+                            link=content.find_element(By.XPATH, """.//a""").get_attribute("href"))
 
-    info_stations.append(info_station)
-    print(info_stations)
-WebDriverWait(driver, 5) \
-    .until(EC.element_to_be_clickable((By.ID, 'rdos_gasolineras_next'))) \
-    .click()
-time.sleep(1)
+        info_stations.append(info_station)
+    print(i)
+    if i < 8:
+        WebDriverWait(driver, 5) \
+            .until(EC.element_to_be_clickable((By.XPATH, """.//a[@class="paginate_button next"]"""))) \
+            .click()
+        time.sleep(1)
 
-filename = "/StationData.txt"
+
+filename = "/StationData.csv"
 file = open(My_path + filename, "w+")
 
 keys = []
@@ -99,3 +103,5 @@ for i in range(len(info_stations)):
         file.writelines(str(info_stations[i][keys[j]]) + ";")
     file.write("\n")
 file.close()
+
+driver.quit()
