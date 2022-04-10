@@ -22,10 +22,14 @@ La práctica ha sido realizada por **Carlos Pérez Cebrián** y **Sandra Guillé
 Para ejecutar el script es necesario instalar las siguientes bibliotecas:
 
 ```
-selenium
-time
-os
-scrapfuel
+selenium      #Interactuar con la web
+time          #Establecer tiempos de espera 
+os            #Funcionalidad con el sistema (path actual)
+scrapfuel     #Fichero con las funcionalidades de webscraping, localización y zenodo
+requests      #Interactuar con el api de zenodo
+random        #Utilizado para modular las solicitudes en la obtención de coordenadas geografica.
+geopy         #Cliente que da acceso a varios servicios geocodificación, como Nominatim que es el servicio utilizado.
+
 ```
 
 Para instalar las bibliotecas necesarias del script es necesario ejecutar el siguiente comando: 
