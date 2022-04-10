@@ -1,7 +1,7 @@
-selenium      #Interactuar con la web
-time          #Establecer tiempos de espera 
-os            #Funcionalidad con el sistema (path actual)
-scrapfuel     #Fichero con las funcionalidades de webscraping, localización y zenodo
-requests      #Interactuar con el api de zenodo
-random        #Utilizado para modular las solicitudes en la obtención de coordenadas geografica.
-geopy         #Cliente que da acceso a varios servicios geocodificación, como Nominatim que es el servicio utilizado.
+selenium
+time
+os
+scrapfuel
+requests
+random
+geopy
