@@ -4,9 +4,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import time
 import os
-from geopy.geocoders import Nominatim
-from math import radians, cos, sin, asin, sqrt
+import requests
 from random import randint
+from geopy.geocoders import Nominatim
+from geopy.distance import geodesic
+
 
 # Genera un fichero con los precios del carburates dada una ubicación
 def scrapfuel(pro, loc, combustible, direccion):
@@ -105,32 +107,23 @@ def scrapfuel(pro, loc, combustible, direccion):
         file.write("\n")
     file.close()
 
+    zenodo_upload(My_path + filename, filename)
     driver.quit()
 
+#Calcula la distancia entre dos puntos
 def Distancia(ptoRef, ptoB):
-    # return 10
-    # time.sleep(1)
     puntoB = PosicionGeografica(ptoB)
-    distancia = haversine(ptoRef[0], ptoRef[1], puntoB[0], puntoB[1])
+    distancia = geodesic(ptoRef, puntoB).kilometers
     return distancia
 
 
-#Fórmula de Haversine: Calcular la distancia en Km entre dos coordenadas
-def haversine(lon1, lat1, lon2, lat2):
-
-    # Conversión a radianes
-    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
-
-    # Fórmula haversine formula
-    dlon = lon2 - lon1
-    dlat = lat2 - lat1
-    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
-    c = 2 * asin(sqrt(a))
-    r = 6371 # Radio de la Tierra en Km.
-    return c * r
-
 #Obtener coordenadas de una dirección dada
 def PosicionGeografica(direccion):
+    # Limpiamos la dirección (aumenta el % de aciertos de obtener las coordenadas)
+    direccion = LimpiarDireccion(direccion)
+
+    # https://nominatim.org. Nominatim usa OpenStreetMap. Gratuito pero con limitaciones en el número de solicitudes
+    # Vamos actualizando el agente y el tiempo entre solicitudes.
     user_agent = 'fuelWebScraping_{}'.format(randint(10000, 99999))
     time.sleep(randint(1 * 100, 1 * 100) / 100)
     geolocator = Nominatim(user_agent=user_agent)
@@ -140,3 +133,54 @@ def PosicionGeografica(direccion):
         return [-6.066313011301985, 76.60688866999108]
     else:
         return [localizacion.longitude, localizacion.latitude]
+
+def LimpiarDireccion(direccion):
+    direccion = direccion.upper()
+    direccion = direccion.replace('CALLE', '')
+    direccion = direccion.replace('CARRER', '')
+    direccion = direccion.replace('AVENIDA', '')
+    direccion = direccion.replace('AVINGUDA', '')
+    direccion = direccion.replace('PLAZA', '')
+    direccion = direccion.replace('S/N', '1')
+    direccion = direccion.replace('C.', '')
+    direccion = direccion.replace('AV.', '')
+    direccion = direccion.replace('CR', '')
+    direccion = direccion.replace('CARRETERA', '')
+    direccion = direccion.replace('AUTOVIA', '')
+    direccion = direccion.replace('KM.', '')
+    direccion = direccion.replace('.', '')
+    return direccion
+
+def zenodo_upload(path, filename):
+    # Accedemos al repositorio haciendo uso de nuestro token
+    # el token lo creamos desde la página de Zenodo
+    token = '6Yx0eQpSrtfxUXW0qmSgeKFwkg7jqnydb5xSPk2J9seuHpQzt6RxKUqEXQFz'
+    cabecera = {'Content-Type': 'application/json'}
+    parametros = params = {'access_token': token}
+    descripcion = {
+        'metadata': {
+            'title': 'fuelPriceScraper',
+            'upload_type': 'Dataset',
+            'description': 'El dataset contiene la información de estaciones de servicio. \n Los datos proceden de la información publicada por el Ministerio para la transición ecológica y el reto demográfico. \n Generado con fines educativos.',
+            'creators': [{'name': 'sguillen1'}, {'name': 'cperezceb'}]
+        }
+    }
+
+    #Creamos una nueva descarga
+    r = requests.post('https://zenodo.org/api/deposit/depositions'
+                      , params=parametros
+                      , json={}
+                      , headers=cabecera)
+
+    #Subimos nuestro documento (no publica)
+    bucket_url = r.json()["links"]["bucket"]
+    with open(path, "rb") as fp:
+        r = requests.put(
+            "%s/%s" % (bucket_url, filename),
+            data=fp,
+            params=params
+        )
+    r.json()
+    print(r.status_code)
+    print(r.json())
+
