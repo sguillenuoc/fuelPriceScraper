@@ -9,17 +9,17 @@ La práctica ha sido realizada por **Carlos Pérez Cebrián** y **Sandra Guillé
 
 ## Ficheros del repositorio
 
-* **README.md**: archivo con la información del repositirio, así como las instruciones para su ejecución.
-* **requirements.txt** : arcvivo con la información de los paquetes Python necesarios para ejecutar el código.
-* **__init__.py**: archibo que contiene el código que ejecuta el web scraping.
-* **fuelWebScraping.py**: archivo que contitne la funcion scrapfuel.
-* **robots.py** : archivo que contiene la funcion para examinar las restricciones de la página. 
+* **README.md**: archivo con la información del repositorio, así como las instrucciones para su ejecución.
+* **requirements.txt** : archivo con la información de los paquetes Python necesarios para ejecutar el código.
+* **__init__.py**: archivo que contiene el código que ejecuta el web scraping.
+* **fuelWebScraping.py**: archivo que contiene la funcion scrapfuel.
+* **robots.py** : archivo que contiene la función para examinar las restricciones de la página. 
 * **M2.851_sguillen1_cperezceb_PRA1_WebScraping.pdf** : archivo pdf con las respuestas de la práctica.
 * **StationData.csv** : archivo csv con la información extraída.
 
-## Instrucciones para la ejecucion del script
+## Instrucciones para la ejecución del script
 
-Para ejecutar el script es necesario instalar la siguientes bibliotecas:
+Para ejecutar el script es necesario instalar las siguientes bibliotecas:
 
 ```
 selenium
@@ -28,7 +28,7 @@ os
 scrapfuel
 ```
 
-Para instalar las bibliotecas necesarias para la ejeccución del script es necesario ejecutar el siguiente comando: 
+Para instalar las bibliotecas necesarias del script es necesario ejecutar el siguiente comando: 
 
 ```
 python get-pip.py install -r requirements.txt
@@ -40,4 +40,4 @@ El script se debe ejecutar de la siguiente manera:
 python _init_.py 
 ```
 
-A continuación debe introducir la provincia, localidad y tipo de combustible que se desee y el script extraera los datos y los guardara en un archivo csv con la información.
+A continuación debe introducir la provincia, localidad y tipo de combustible que se desee. El script extraerá los datos y los guardara en un archivo csv con la información.
