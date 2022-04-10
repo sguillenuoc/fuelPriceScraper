@@ -21,6 +21,7 @@ def scrapfuel(pro, loc, combustible):
     # Inicializamos el navegador
     driver = webdriver.Chrome(executable_path=My_path + '/chromedriver.exe', options=options)
     driver.get(url)
+    time.sleep(1)
 
     # Interactuamos con la web con Selenium
 
@@ -50,12 +51,13 @@ def scrapfuel(pro, loc, combustible):
     WebDriverWait(driver, 5) \
         .until(EC.element_to_be_clickable((By.ID, 'tipo_combustible'))) \
         .send_keys(combustible)
+    time.sleep(2)
 
     # Pulsamos el botón de buscar
     WebDriverWait(driver, 5) \
         .until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[2]/div[2]/div[2]/div/div[3]/div[1]/div/div/div[2]/div/div/form/p[2]/input'))) \
         .click()
-    time.sleep(5)
+    time.sleep(2)
 
     info_stations = []
     num_pag = driver.find_element(By.XPATH, """.//span/a[last()]""").text
@@ -74,11 +76,12 @@ def scrapfuel(pro, loc, combustible):
 
             info_stations.append(info_station)
 
-        if i < pags:
+        if i < pags-1:
+            print(f'Click:{i}')
             WebDriverWait(driver, 5) \
                 .until(EC.element_to_be_clickable((By.XPATH, """.//a[@class="paginate_button next"]"""))) \
                 .click()
-            time.sleep(1)
+            time.sleep(2)
 
     filename = "/StationData.csv"
     file = open(My_path + filename, "w+")
