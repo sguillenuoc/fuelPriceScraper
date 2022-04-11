@@ -15,7 +15,8 @@ La práctica ha sido realizada por **Carlos Pérez Cebrián** y **Sandra Guillé
 * **fuelWebScraping.py**: archivo que contiene la funcion scrapfuel.
 * **robots.py** : archivo que contiene la función para examinar las restricciones de la página. 
 * **M2.851_sguillen1_cperezceb_PRA1_WebScraping.pdf** : archivo pdf con las respuestas de la práctica.
-* **StationData.csv** : archivo csv con la información extraída.
+* **StationData.csv** : archivo csv con la información extraída. 
+                        Se puede consultar también a través de la url https://doi.org/10.5281/zenodo.6449311                        
 
 ## Instrucciones para la ejecución del script
 
